@@ -32,10 +32,9 @@ class NewVisitorTest(LiveServerTestCase):
 		self.browser.get(self.live_server_url)
 		header_text = self.browser.find_element_by_tag_name('h1').text
 		self.assertIn('To-Do', header_text)
-
 		self.wait_for_row_in_list_table('2: Use peacock feathers to make a fly')
 		self.wait_for_row_in_list_table('1: Buy peacock feathers')
-		# Satisfied, she goes bacl to sleep
+		# Satisfied, she goes back to sleep
 		
 	def test_multiple_users_can_start_lists_at_different_urls(self):
 		self.browser.get(self.live_server_url)
@@ -75,5 +74,5 @@ class NewVisitorTest(LiveServerTestCase):
 		# Again, there is no trace of Edith's list
 		page_text = self.browser.find_element_by_tag_name('body').text
 		self.assertNotIn('Buy peacock feathers', page_text)
-		self.asserIn('Buy milk', page_text)
+		self.assertIn('Buy milk', page_text)
 		# Satisfied, they both go back to sleep
