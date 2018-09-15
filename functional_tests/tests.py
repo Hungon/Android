@@ -1,3 +1,4 @@
+import os
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -11,7 +12,10 @@ class NewVisitorTest(StaticLiveServerTestCase):
 		
 	def setUp(self):
 		self.browser = webdriver.Firefox()
-	
+		staging_server = os.environ.get('STAGING_SERVER')
+		if staging_server:
+			self.live_server_url = 'http://'+staging_server
+			
 	def tearDown(self):
 		self.browser.quit()
 		
@@ -19,12 +23,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
 		self.browser.get(self.live_server_url)
 		header_text = self.browser.find_element_by_tag_name('h1').text
 		self.assertIn('To-Do', header_text)
-		inputbox = self.browser.find_element_by_id('id_new_item')
-		inputbox.send_keys('Buy peacock feathers')
-		inputbox.send_keys(Keys.ENTER)
 		self.wait_for_row_in_list_table('1: Buy peacock feathers')
-		inputbox.send_keys('Use peacock feathers to make a fly')
-		inputbox.send_keys(Keys.ENTER)
 		self.wait_for_row_in_list_table('2: Use peacock feathers to make a fly')
 		# Satisfied, she goes back to sleep
 
