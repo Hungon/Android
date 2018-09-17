@@ -6,6 +6,7 @@ from django.http import HttpRequest
 from lists.views import home_page
 
 class ListAndItemModelsTest(TestCase):
+		
 
 	def test_saving_and_retrieveing_items(self):
 		list_ = List()
